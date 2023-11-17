@@ -18,16 +18,10 @@ const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
     }
     else if(ops==="-"){
       let calculation = handleCalculate(arrayData,"");
-      let output = calculation.reduce((outputData, element, index, array)=>{
-        if(element==="-"){
-          let toBeSubtracted = index === 0 ?
-          let subtractor = (index + 1) > (array.length - 1) ? 0 : array[index + 1];  //if the next index after minus sign is greater than the maximum index of the array, put 0, else assign the actual index+1
-        }
-      },[]);
-      return output;
+      return calculation;
     }
     else if(ops==="+"){
-      let calculation = handleCalculate(arrayData,"-");
+      let calculation = handleCalculate(arrayData,"");
       return calculation;
     }
     else if(ops==="/"){
@@ -43,21 +37,23 @@ const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
   const handleBtnClick = (ops:string) =>{
     const displayData = display.calc.data;
     let setDisplayText = display.calc.display;
-    if(ops==="=" && ( !display.calc.display[display.calc.display.length-1 ].includes( "+" ) ) ){
-      let output = 0;
-      let arrayOfCalculation = [];
-      // I think you're supposed to use recursion with this
-      let multiplicationIndices = displayData.reduce((out,element,index)=>{
-        if(element === "x"){
-          out.push(index);
-        }
-      },[]);
-      
+    const regExOps = /(\+|\-|\/|x)$/;
+    if(ops==="=" && ( !display.calc.display[display.calc.display.length-1 ] === "="  ) ){
+
     }
-    else if( ops==="+" && ( !display.calc.display[display.calc.display.length-1 ].includes( "+" ) ) ){
+    // ops.match(/^(\+|\-|\/|x)$/)
+    else if( ops.match( regExOps ) && 
+            ( 
+              display.calc.display.length-1 < 0 && 
+              !display.calc.display[display.calc.display.length-1 ].match( regExOps ) 
+            ) 
+          ){
       displayData.push(ops);
-      displayData.push("");
-      setDisplayText = setDisplayText + "+";
+      // minus is a special case. It should be treated as a negative number instead
+      if(ops !== "-"){
+        displayData.push("");
+      }
+      setDisplayText = setDisplayText + ops;
       setDisplay({
           mainNum:display.mainNum,
           calc:{

@@ -30,6 +30,7 @@ const NumButtons = ({display,setDisplay}:NumButtonsProps) => {
       setDisplayText = setDisplayText + btnInputData;
       setDisplayData[setDisplayData.length-1] = setDisplayData[setDisplayData.length-1] + btnInputData;
     }
+    
     setDisplay({
       mainNum: "",
       calc: {

@@ -11,6 +11,35 @@ interface OperatorButtonsProps{
 }
 
 const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
+  const handleCalculate = (arrayData:[],ops:string)=>{
+    if(!ops){
+      let output =  [...arrayData]
+      return output;
+    }
+    else if(ops==="-"){
+      let calculation = handleCalculate(arrayData,"");
+      let output = calculation.reduce((outputData, element, index, array)=>{
+        if(element==="-"){
+          let toBeSubtracted = index === 0 ?
+          let subtractor = (index + 1) > (array.length - 1) ? 0 : array[index + 1];  //if the next index after minus sign is greater than the maximum index of the array, put 0, else assign the actual index+1
+        }
+      },[]);
+      return output;
+    }
+    else if(ops==="+"){
+      let calculation = handleCalculate(arrayData,"-");
+      return calculation;
+    }
+    else if(ops==="/"){
+      let calculation = handleCalculate(arrayData,"+");
+      return calculation;
+    }
+    else if(ops==="x"){
+      let calculation = handleCalculate(arrayData,"/");
+      return calculation;
+    }
+  }
+
   const handleBtnClick = (ops:string) =>{
     const displayData = display.calc.data;
     let setDisplayText = display.calc.display;
@@ -38,6 +67,7 @@ const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
         })
     }
   }
+
   return (
     <>
       <div className="btn-ops collection">

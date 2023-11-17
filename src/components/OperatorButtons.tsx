@@ -12,17 +12,28 @@ interface OperatorButtonsProps{
 
 const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
   const handleBtnClick = (ops:string) =>{
-    const setDisplayData = display.calc.data;
+    const displayData = display.calc.data;
     let setDisplayText = display.calc.display;
-    if(ops==="+" && (!display.calc.display[display.calc.display.length-1].includes("+"))){
-      setDisplayData.push(ops);
-      setDisplayData.push("");
+    if(ops==="=" && ( !display.calc.display[display.calc.display.length-1 ].includes( "+" ) ) ){
+      let output = 0;
+      let arrayOfCalculation = [];
+      // I think you're supposed to use recursion with this
+      let multiplicationIndices = displayData.reduce((out,element,index)=>{
+        if(element === "x"){
+          out.push(index);
+        }
+      },[]);
+      
+    }
+    else if( ops==="+" && ( !display.calc.display[display.calc.display.length-1 ].includes( "+" ) ) ){
+      displayData.push(ops);
+      displayData.push("");
       setDisplayText = setDisplayText + "+";
       setDisplay({
           mainNum:display.mainNum,
           calc:{
             display: setDisplayText,
-            data: setDisplayData
+            data: displayData
           }
         })
     }

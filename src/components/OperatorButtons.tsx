@@ -3,7 +3,7 @@ interface OperatorButtonsProps{
   display: {
     mainNum: string;
     calc: {
-      display:string;
+      display:string;                                       
       data: number;
     }
   };
@@ -11,56 +11,87 @@ interface OperatorButtonsProps{
 }
 
 const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
-  const handleCalculate = (arrayData:[],ops:string)=>{
-    if(!ops){
-      let output =  [...arrayData]
+  const handleCalculate = (arrayData:[],ops:string): string[] =>{
+    if(ops==="x"){
+      let output: string[] = handleCalculate(arrayData,"");
+      output = output.reduce( ( 
+          accumulator : string[], 
+          curVal : string, 
+          index : number, 
+          array : string []
+        )=>{
+          
+        if( ( index > 0 &&  index+1 < array.length ) && curVal === "x"){
+          const calculation : string = ( Number( array[index-1] ) * Number( array[index+1] ) ).toString();
+          
+          accumulator.push(calculation);
+        }
+        else{
+          accumulator.push(curVal)
+        }
+        console.log("redu",index,accumulator);
+        return accumulator;
+      },[]);
+      console.log("multiply", output)
+      return output;
+    }
+    else if(ops==="/"){
+      let output: string[] = handleCalculate(arrayData,"x");
+      return output;
+    }
+    else if(ops==="+"){
+      let output: string[] = handleCalculate(arrayData,"/");
       return output;
     }
     else if(ops==="-"){
-      let calculation = handleCalculate(arrayData,"");
-      return calculation;
+      let output: string[] = handleCalculate(arrayData,"+");
+      return output;
     }
-    else if(ops==="+"){
-      let calculation = handleCalculate(arrayData,"");
-      return calculation;
+    else {
+      let output: string[] =  [...arrayData]
+      return output;
     }
-    else if(ops==="/"){
-      let calculation = handleCalculate(arrayData,"+");
-      return calculation;
-    }
-    else if(ops==="x"){
-      let calculation = handleCalculate(arrayData,"/");
-      return calculation;
-    }
+    
   }
 
   const handleBtnClick = (ops:string) =>{
     const displayData = display.calc.data;
     let setDisplayText = display.calc.display;
     const regExOps = /(\+|\-|\/|x)$/;
-    if(ops==="=" && ( !display.calc.display[display.calc.display.length-1 ] === "="  ) ){
-      // handleCalcultate
+    const regExInt = /\d/;
+    if(ops==="=" && ( 
+        displayData.length > 2
+      ) ){
+        
+        const data = handleCalculate(displayData,"-");
+        console.log("equals", data);
     }
     // ops.match(/^(\+|\-|\/|x)$/)
     else if( ops.match( regExOps ) && 
-            ( 
-              display.calc.display.length-1 >= 0 && 
-              !display.calc.display[display.calc.display.length-1 ].match( regExOps ) 
-            ) 
-          ){
-      displayData.push(ops);
-      // minus is a special case. It should be treated as a negative number instead if it is in the beginning.
-      if(displayData.length > 0 && ops !== "-"){
-        displayData.push("");
-      }
-      setDisplayText = setDisplayText + ops;
+      (
+        display.calc.display.length === 0 ||
+        !display.calc.display[ display.calc.display.length - 1 ].match( regExOps )
+      )   ){
+        console.log(displayData.length,displayData[displayData.length-1].length,ops);
+        if(displayData.length===1 && displayData[displayData.length-1].length===0 && ops === "-"){
+          // minus is a special case. It should be treated as a negative number instead if it is in the beginning.
+          console.log("true");
+          displayData[displayData.length-1] += ops;
+          setDisplayText += ops;
+        }
+        else if(displayData.length > 0 && displayData[displayData.length-1].match(regExInt)){
+          displayData.push(ops);
+          displayData.push("");
+          setDisplayText += ops;
+        }
+      
       setDisplay({
-          mainNum:display.mainNum,
-          calc:{
-            display: setDisplayText,
-            data: displayData
-          }
-        })
+        mainNum:display.mainNum,
+        calc:{        
+          display: setDisplayText,
+          data: displayData
+        }
+      })
     }
   }
 
@@ -73,7 +104,7 @@ const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
         <a href="#" className="btn btnOpsMinus" onClick={()=>handleBtnClick("-")}>
           -
         </a>
-        <a href="#" className="btn btnOpsMultiply" onClick={()=>handleBtnClick("*")}>
+        <a href="#" className="btn btnOpsMultiply" onClick={()=>handleBtnClick("x")}>
           x
         </a>
         <a href="#" className="btn btnOpsDivide" onClick={()=>handleBtnClick("/")}>

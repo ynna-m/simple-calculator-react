@@ -20,13 +20,14 @@ const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
           index : number, 
           array : string []
         )=>{
-          
+          // Make sure to delete previous val and next val from the accumulator if they're being calculated 
         if( ( index > 0 &&  index+1 < array.length ) && curVal === "x"){
-          const calculation : string = ( Number( array[index-1] ) * Number( array[index+1] ) ).toString();
           
-          accumulator.push(calculation);
+          const calculation : string = ( Number( array[index-1] ) * Number( array[index+1] ) ).toString();
+          accumulator.pop();
+          accumulator.push(calculation+"?");
         }
-        else{
+        else if(){
           accumulator.push(curVal)
         }
         console.log("redu",index,accumulator);

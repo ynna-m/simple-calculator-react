@@ -39,18 +39,18 @@ const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
     let setDisplayText = display.calc.display;
     const regExOps = /(\+|\-|\/|x)$/;
     if(ops==="=" && ( !display.calc.display[display.calc.display.length-1 ] === "="  ) ){
-
+      // handleCalcultate
     }
     // ops.match(/^(\+|\-|\/|x)$/)
     else if( ops.match( regExOps ) && 
             ( 
-              display.calc.display.length-1 < 0 && 
+              display.calc.display.length-1 >= 0 && 
               !display.calc.display[display.calc.display.length-1 ].match( regExOps ) 
             ) 
           ){
       displayData.push(ops);
-      // minus is a special case. It should be treated as a negative number instead
-      if(ops !== "-"){
+      // minus is a special case. It should be treated as a negative number instead if it is in the beginning.
+      if(displayData.length > 0 && ops !== "-"){
         displayData.push("");
       }
       setDisplayText = setDisplayText + ops;

@@ -21,18 +21,24 @@ const OperatorButtons = ({display,setDisplay}:NumButtonsProp) => {
           array : string []
         )=>{
           // Make sure to delete previous val and next val from the accumulator if they're being calculated 
-        if( ( index > 0 &&  index+1 < array.length ) && curVal === "x"){
-          
-          const calculation : string = ( Number( array[index-1] ) * Number( array[index+1] ) ).toString();
-          accumulator.pop();
-          accumulator.push(calculation+"?");
-        }
-        else if(){
-          accumulator.push(curVal)
-        }
-        console.log("redu",index,accumulator);
-        return accumulator;
-      },[]);
+          console.log("contain", index, curVal, array, accumulator);
+          if( ( accumulator.length === 0 && index === 2 ) && curVal === "x"){
+            const calculation : string = ( Number( array[index-1] ) * Number( array[index+1] ) ).toString();
+            accumulator.push(calculation+'?');
+          }
+          else if (accumulator.length > 0 && index > 2){
+            if(curVal === "x" && accumulator[accumulator.length-1].includes("?")){
+              const calculation : string = ( Number( accumulator[accumulator.length-1] ) * Number( array[index+1] ) ).toString();
+              accumulator[accumulator.length-1] = accumulator[accumulator.length-1].replace('?',''); 
+              accumulator.push(calculation+'?');
+            }
+          }
+          // else{
+          //   accumulator.push(curVal)
+          // }
+          console.log("redu",index,accumulator);
+          return accumulator;
+        },[]);
       console.log("multiply", output)
       return output;
     }

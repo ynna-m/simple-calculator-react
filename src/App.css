@@ -1,0 +1,98 @@
+#root {
+  background-color: #b9b9b9;
+  margin: 0 auto;
+  padding: 2rem;
+  height:100vh;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Calculator Styles */
+body{
+  height:100vh;
+}
+.header-h1{
+  text-align: center;
+}
+.calc-container.container{
+  background-color:#f2f0f0;
+  padding:20px;
+}
+.calc-display.container{
+  margin-bottom:10px;
+}
+.calc-display > div{
+  background-color:#b5bfb5;
+  min-height:30px;
+  padding:5px 10px;
+  text-align: right;
+}
+.calc-buttons.calc-buttons{
+  display:flex;
+  flex-wrap: wrap;
+}
+.calc-buttons > div.calc-buttons{
+  display:flex;
+  flex-wrap: wrap;
+  flex: 1 1 50%;
+}
+.calc-buttons-numbers .calc-buttons-number,
+.calc-buttons .calc-buttons-operators > a{    
+  min-width:20px;
+  padding:5px 0px;
+  display: flex;
+  justify-content: center;
+  background-color:#e3dccb;
+  color:#000;
+  margin:2px;
+  border-radius: 5px;
+}
+.calc-buttons-numbers .calc-buttons-number:hover,
+.calc-buttons .calc-buttons-operators > a:hover{
+  background-color:#b9b19d;
+}
+.calc-buttons-numbers .calc-buttons-number{
+  flex: 1 1 30%;
+}
+.calc-buttons .calc-buttons-operators > a{
+  flex: 1 1 40%;
+}
+.calc-buttons-number.button-number-0{
+  flex: 1 1 50%;
+}
